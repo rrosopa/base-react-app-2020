@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import * as serviceWorker from './serviceWorker';
 
 /* Make the store available to all container 
 components in the application without passing it explicitly */
@@ -13,7 +12,7 @@ import { Store } from 'redux';
 
 // Import the store function and state
 import configureStore, { IAppState } from './store/store';
-import { getAllCharacters } from './store/character/actions';
+// import { getAllCharacters } from './store/character/actions';
 
 interface IProps {
   store: Store<IAppState>;
@@ -33,7 +32,7 @@ const Root: React.SFC<IProps> = props => {
 
 // Generate the store
 const store = configureStore();
-store.dispatch(getAllCharacters());
+// store.dispatch(getAllCharacters());
 
 
 ReactDOM.render(<Root store={store} />, document.getElementById(

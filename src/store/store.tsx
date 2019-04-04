@@ -28,6 +28,6 @@ const rootReducer = combineReducers<IAppState>({
 
 // Create a configure store function of type `IAppState`
 export default function configureStore(): Store<IAppState, any> {
-  const store = createStore(rootReducer, undefined, applyMiddleware(thunk));
+  const store = createStore(rootReducer);
   return store;
 }

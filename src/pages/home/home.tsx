@@ -1,23 +1,56 @@
-import React, { Component } from 'react';
+import React, { Component, ChangeEvent } from 'react';
 import { connect } from 'react-redux';
 import { IAppState } from '../../store/store';
-import { ICharacter } from '../../store/character/reducer';
+import { ICharacter } from '../../models/characters/ICharacter';
+import { addCharacter } from '../../store/character/actions';
+import Modal from '../../components/modal/modal';
 
 interface IHomePageProps {
     characters: ICharacter[];
+    dispatch: any;
 }
 
 interface IHomePageState {
-
+    name: string;
 }
 
 class HomePage extends Component<IHomePageProps, IHomePageState> {
-	render() {
-        console.log(this.props.characters);
+    constructor(props: IHomePageProps){
+        super(props);
 
+        this.resetState();
+        this.handleInputChange = this.handleInputChange.bind(this);
+        this.handleOnSubmit = this.handleOnSubmit.bind(this);
+    }
+    
+    componentDidMount(){
+    }
+
+    private resetState(){
+        this.state = {
+            name: ''
+        }
+    }
+    
+    private handleInputChange(e: ChangeEvent<HTMLInputElement>) { //e is element
+        this.setState({ ...this.state, [e.target.name]: e.target.value })
+    }
+
+    private handleOnSubmit() {
+        this.props.dispatch(addCharacter(this.state.name));
+    }
+
+    render() {
 		return (
 			<div>
-                "test"
+                <input type="text" name="name" value={this.state.name} onChange={this.handleInputChange} />
+                <button onClick={this.handleOnSubmit}>Submit</button>
+
+                {/* <Modal> */}
+                    {this.props.characters.map((character: ICharacter, index: number) => {
+                        return <div key={index}>{character.name}</div>
+                    })}
+                {/* </Modal> */}
 			</div>
 		);
 	}
@@ -29,4 +62,8 @@ const mapStateToProps = (store: IAppState) => {
 	};
 }
 
-export default connect(mapStateToProps)(HomePage);
+const mapDispatchToProps = (dispatch: any) => {
+    return { dispatch };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(HomePage);
