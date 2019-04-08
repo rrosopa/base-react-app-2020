@@ -1,29 +1,22 @@
+import { combineReducers, createStore, Store } from 'redux';
 
-/*  Imports from Redux:
- applyMiddleware: Applies middleware to the dispatch method of the Redux store
- combineReducers: Merges reducers into one
- createStore: Creates a Redux store that holds the state tree
- Store: The TS Type used for the store, or state tree
- */
-import { applyMiddleware, combineReducers, createStore, Store } from 'redux';
-/*  Thunk
-Redux Thunk middleware allows you to write action creators that return a function instead of an action. The thunk can be used to delay the dispatch of an action, or to dispatch only if a certain condition is met. The inner function receives the store methods dispatch and getState as parameters.
-*/
-import thunk from 'redux-thunk';
 // Import reducers and state type
-import {
-  characterReducer,
-  ICharacterState,
-} from './character/reducer';
+import { characterReducer, ICharacterState } from './character/reducer';
+import { ICurrentUserState, currentUserReducer } from './currentUser/reducer';
 
-// Create an interface for the application state
+// Always ask yourself the following:
+// 1. Do other parts of the application care about this data?
+// 2. Is this data being used to drive multiple components?
+// 3. Do you want to cache the data? does the data really required to be cache?
 export interface IAppState {
   characterState: ICharacterState;
+  currentUserState: ICurrentUserState;
 }
 
 // Create the root reducer
 const rootReducer = combineReducers<IAppState>({
   characterState: characterReducer,
+  currentUserState: currentUserReducer
 });
 
 // Create a configure store function of type `IAppState`

@@ -4,6 +4,7 @@ import { IAppState } from '../../store/store';
 import { ICharacter } from '../../models/characters/ICharacter';
 import { addCharacter } from '../../store/character/actions';
 import Modal from '../../components/modal/modal';
+import { TodoService } from '../../api/books/booksService';
 
 interface IHomePageProps {
     characters: ICharacter[];
@@ -24,6 +25,8 @@ class HomePage extends Component<IHomePageProps, IHomePageState> {
     }
     
     componentDidMount(){
+        let service1 = new TodoService();
+        service1.getBooks();
     }
 
     private resetState(){
