@@ -6,32 +6,30 @@ import { addCharacter } from '../../store/character/actions';
 import Modal from '../../components/modal/modal';
 import { TodoService } from '../../api/todos/todoService';
 
-interface IHomePageProps {
+interface ILoginPageProps {
     characters: ICharacter[];
     dispatch: any;
 }
 
-interface IHomePageState {
-    name: string;
+interface ILoginPageState {
+    username: string;
+    password: string;
 }
 
-class HomePage extends Component<IHomePageProps, IHomePageState> {
-    constructor(props: IHomePageProps){
+class LoginPage extends Component<ILoginPageProps, ILoginPageState> {
+    constructor(props: ILoginPageProps){
         super(props);
 
         this.resetState();
         this.handleInputChange = this.handleInputChange.bind(this);
-        this.handleOnSubmit = this.handleOnSubmit.bind(this);
     }
     
-    componentDidMount(){
-        let service1 = new TodoService();
-        service1.getBooks();
-    }
+    componentDidMount() { }
 
     private resetState(){
         this.state = {
-            name: ''
+            username: '',
+            password: ''
         }
     }
     
@@ -39,21 +37,10 @@ class HomePage extends Component<IHomePageProps, IHomePageState> {
         this.setState({ ...this.state, [e.target.name]: e.target.value })
     }
 
-    private handleOnSubmit() {
-        this.props.dispatch(addCharacter(this.state.name));
-    }
-
     render() {
 		return (
 			<div>
-                <input type="text" name="name" value={this.state.name} onChange={this.handleInputChange} />
-                <button onClick={this.handleOnSubmit}>Submit</button>
-
-                {/* <Modal> */}
-                    {this.props.characters.map((character: ICharacter, index: number) => {
-                        return <div key={index}>{character.name}</div>
-                    })}
-                {/* </Modal> */}
+                <p>login</p>
 			</div>
 		);
 	}
@@ -69,4 +56,4 @@ const mapDispatchToProps = (dispatch: any) => {
     return { dispatch };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(HomePage);
+export default connect(mapStateToProps, mapDispatchToProps)(LoginPage);

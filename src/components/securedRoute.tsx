@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
-import { Route, Redirect } from 'react-router-dom';
+import { Route, Redirect, RouteComponentProps } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { IAppState } from '../store/store';
 import { ICurrentUserDetails } from '../models/users/CurrentUserDetails';
 
 interface ISecuredRouteProps {
     path: string;
+    component: React.ComponentType<RouteComponentProps<any>> | React.ComponentType<any>;
+    exact?: boolean;
+    
     titleRequirements?: string[];
-
     currentUser: ICurrentUserDetails;
 }
 
@@ -31,7 +33,13 @@ class SecuredRoute extends Component<ISecuredRouteProps> {
     }
 
     render() {
-		return <> {this.isLoggedIn && this.isTitleRequirementsMet ? <Route path={this.props.path}/> : <Redirect to='login' />} </>
+        return <> 
+            {
+                this.isLoggedIn() && this.isTitleRequirementsMet() 
+                    ? <Route path={this.props.path} exact={this.props.exact} component={this.props.component} /> 
+                    : <Redirect to='login' />
+            } 
+        </>
 	}
 }
 
