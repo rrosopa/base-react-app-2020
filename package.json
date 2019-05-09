@@ -34,6 +34,7 @@
   ],
   "devDependencies": {
     "@types/react-redux": "^7.0.5",
-    "@types/react-router-dom": "^4.3.1"
+    "@types/react-router-dom": "^4.3.1",
+    "typed-scss-modules": "0.0.10"
   }
 }

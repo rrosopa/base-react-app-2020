@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './modal.scss';
+import styles from './modal.scss';
 
 interface IModalProps {
 }
@@ -11,8 +11,8 @@ class Modal extends Component<IModalProps> {
 
     render() {
 		return (
-			<div className="overlay">
-                <div className="alert"> 
+			<div className={styles.overlay}>
+                <div className={styles.alert}> 
                     {this.props.children}
                 </div>
 			</div>

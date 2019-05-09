@@ -10,6 +10,7 @@ import {
 	Switch
 } from 'react-router-dom';
 import SecuredRoute from './components/securedRoute';
+import './App.module.scss';
 
 class App extends Component {
 	render() {
