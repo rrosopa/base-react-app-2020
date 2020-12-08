@@ -16,6 +16,8 @@ interface ISecuredRouteProps {
 class SecuredRoute extends Component<ISecuredRouteProps> {
     constructor(props: ISecuredRouteProps){
         super(props);
+        
+        this.state = {};
     }
 
     private isLoggedIn(): boolean {
@@ -23,13 +25,13 @@ class SecuredRoute extends Component<ISecuredRouteProps> {
     }
 
     private isTitleRequirementsMet(): boolean {
-        if(this.props.titleRequirements == null || this.props.titleRequirements == undefined)
+        if(this.props.titleRequirements === null || this.props.titleRequirements === undefined)
             return true;
         
-        if(this.props.titleRequirements.length == 0)
+        if(this.props.titleRequirements.length === 0)
             return true;
 
-        return this.props.titleRequirements.findIndex(titles => titles == this.props.currentUser.title) > -1
+        return this.props.titleRequirements.findIndex(titles => titles === this.props.currentUser.title) > -1
     }
 
     render() {

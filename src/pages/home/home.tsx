@@ -19,7 +19,10 @@ class HomePage extends Component<IHomePageProps, IHomePageState> {
     constructor(props: IHomePageProps){
         super(props);
 
-        this.resetState();
+        this.state = {
+            name: ''
+        };
+
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleOnSubmit = this.handleOnSubmit.bind(this);
     }
@@ -27,12 +30,6 @@ class HomePage extends Component<IHomePageProps, IHomePageState> {
     componentDidMount(){
         let service1 = new TodoService();
         service1.getBooks();
-    }
-
-    private resetState(){
-        this.state = {
-            name: ''
-        }
     }
     
     private handleInputChange(e: ChangeEvent<HTMLInputElement>) { //e is element

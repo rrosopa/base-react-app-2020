@@ -16,10 +16,10 @@ function appFetch<T>(url: string, method: APIMethods, data?: Object): Promise<T>
         body: data == null ? undefined : JSON.stringify(data)
     })
     .then(response => {
-        if(response.status == 401){
+        if(response.status === 401){
             // redirect to login page?
         }
-        else if(response.status == 403){
+        else if(response.status === 403){
             // redirect to forbidden/warning page?
         }
 

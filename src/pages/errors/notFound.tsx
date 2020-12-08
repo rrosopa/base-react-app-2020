@@ -1,4 +1,4 @@
-import React, { Component, ChangeEvent } from 'react';
+import React, { Component } from 'react';
 
 interface INotFoundPageProps { }
 interface INotFoundPageState { }
@@ -6,15 +6,11 @@ interface INotFoundPageState { }
 class NotFoundPage extends Component<INotFoundPageProps, INotFoundPageState> {
     constructor(props: INotFoundPageProps){
         super(props);
-
-        this.resetState();
+        
+        this.state = { };
     }
     
     componentDidMount() { }
-
-    private resetState(){
-        this.state = { }
-    }
 
     render() {
 		return (

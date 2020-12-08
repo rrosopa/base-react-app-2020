@@ -1,4 +1,4 @@
-import React, { Component, ChangeEvent } from 'react';
+import React, { Component } from 'react';
 
 interface IForbiddenPageProps { }
 interface IForbiddenPageState { }
@@ -6,15 +6,11 @@ interface IForbiddenPageState { }
 class ForbiddenPage extends Component<IForbiddenPageProps, IForbiddenPageState> {
     constructor(props: IForbiddenPageProps){
         super(props);
-
-        this.resetState();
+        
+        this.state = { };
     }
     
     componentDidMount() { }
-
-    private resetState(){
-        this.state = { }
-    }
 
     render() {
 		return (
