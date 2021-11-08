@@ -1,20 +1,36 @@
 export enum MetadataControlType {
     Input,
-    Select
+    Select,
+    Textarea
 }
 
-export default interface IMetadataControl{
+export interface IMetadataControlWidth {
+    xs?: number;
+    sm?: number;
+    md?: number;
+    lg?: number;
+    xl?: number;
+    xxl?: number;
+}
+
+export interface IMetadataFormControl{
     controlType: MetadataControlType;
+    control: IMetadataControl;
+}
+
+export default interface IMetadataControl {
     id: string;
     label: string;
     value: string | number;
+    name: string;   
 
+    tabIndex?: number;
     disabled?: boolean;
-    error?: string;
+    errorMessage?: string;
     hidden?: boolean;
-    index?: number;
-    name?: string;   
+    index?: number;    
     placeholder?: string; 
     required?: boolean;
-    width?: number | string;
+
+    widths?: IMetadataControlWidth;
 }

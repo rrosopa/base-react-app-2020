@@ -1,27 +1,27 @@
-import React, { Component, ChangeEvent } from 'react';
+import React, { ChangeEvent, Component } from 'react';
+import { Col, Container, Row } from 'react-bootstrap';
 import { connect } from 'react-redux';
-import { IAppState } from '../../store/store';
-import { ICharacter } from '../../models/characters/ICharacter';
-import { addCharacter } from '../../store/character/actions';
-import Modal from '../../components/modal/modal';
-import { TodoService } from '../../api/todos/todoService';
-import MetadataForm, { IMetadataForm } from '../../components/metadata/metadataForm';
+import { RouteComponentProps } from 'react-router-dom';
 import { MetadataControlType } from '../../components/metadata/metadataControl';
-import MetadataInput, { IMetadataInput } from '../../components/metadata/metadataInput';
-import { IMetadataSelect } from '../../components/metadata/metadataSelect';
+import MetadataForm from '../../components/metadata/metadataForm';
+import { IMetadataInput } from '../../components/metadata/metadataInput';
+import { ICharacter } from '../../models/characters/ICharacter';
+import { IAppState } from '../../store/store';
 
-interface ILoginPageProps {
+interface IRouteProps { }
+
+interface IProps extends RouteComponentProps<IRouteProps> {
     characters: ICharacter[];
     dispatch: any;
 }
 
-interface ILoginPageState {
+interface IState {
     username: string;
     password: string;
 }
 
-class LoginPage extends Component<ILoginPageProps, ILoginPageState> {
-    constructor(props: ILoginPageProps){
+class LoginPage extends Component<IProps, IState> {
+    constructor(props: IProps){
         super(props);
 
         this.state = {
@@ -30,6 +30,7 @@ class LoginPage extends Component<ILoginPageProps, ILoginPageState> {
         };
 
         this.handleInputChange = this.handleInputChange.bind(this);
+        this.onLogin = this.onLogin.bind(this);
     }
     
     componentDidMount() { }
@@ -38,51 +39,49 @@ class LoginPage extends Component<ILoginPageProps, ILoginPageState> {
         this.setState({ ...this.state, [e.target.name]: e.target.value })
     }
 
+    private onLogin(){
+        alert('login');
+    }
+
     render() {
 		return (
-			<div>
-                <MetadataForm 
-                    formdId='form-login'
-                    metadata={[
-                        {
-                            controlType: MetadataControlType.Input,
-                            id: 'username',
-                            label: 'Username',
-                            value: this.state.username,
-                            name: 'username',
-                            required: true, 
-                            onChange: this.handleInputChange,                            
-                        } as IMetadataInput,
-                        {
-                            controlType: MetadataControlType.Input,
-                            id: 'password',
-                            label: 'Password',
-                            value: this.state.password,
-                            name: 'password',
-                            required: true, 
-                            type: 'password',
-
-                            onChange: this.handleInputChange
-                        } as IMetadataInput,
-                        {
-                            controlType: MetadataControlType.Select,
-                            id: 'password',
-                            label: 'test',
-                            value: 2,
-                            name: 'password',
-                            required: true, 
-                            options: [
-                                { key: 1, value: 1 },
-                                { key: 2, value: 2 },
-                                { key: 3, value: 3 },
-                                { key: 3, value: 3 }
-                            ]                            
-                        } as IMetadataSelect
-                    ]}
-                />
-
-                <p>username: {this.state.username}</p>
-			</div>
+			<Container className="vh-100">                
+                <Row className="h-100 d-flex justify-content-center align-items-center">
+                    <Col xs={11} md={8} lg={6} xl={4}>
+                        <MetadataForm 
+                            id='form-login'
+                            header='Login'
+                            onSubmit={this.onLogin}
+                            btnSubmitText="Login"                    
+                            metadata={[
+                                {
+                                    controlType: MetadataControlType.Input,
+                                    control: {
+                                        id: 'username',
+                                        label: 'Username',
+                                        value: this.state.username,
+                                        name: 'username',
+                                        required: true, 
+                                        onChange: this.handleInputChange,                      
+                                    } as IMetadataInput
+                                },
+                                {
+                                    controlType: MetadataControlType.Input,
+                                    control: {
+                                        id: 'password',
+                                        label: 'Password',
+                                        value: this.state.password,
+                                        name: 'password',
+                                        required: true, 
+                                        type: 'password',
+                                        onChange: this.handleInputChange  
+                                    } as IMetadataInput
+                                }
+                            ]}
+                        />
+                    </Col>
+                </Row>
+			</Container>
 		);
 	}
 }

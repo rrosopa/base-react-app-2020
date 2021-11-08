@@ -1,64 +1,113 @@
-import React, { Component, ChangeEvent } from 'react';
+import React, { ChangeEvent, Component } from 'react';
 import { connect } from 'react-redux';
+import { Route, RouteComponentProps } from 'react-router-dom';
+import { PagePath } from '../../constants/pagePath';
+import { ICurrentUserDetails } from '../../models/users/CurrentUserDetails';
 import { IAppState } from '../../store/store';
-import { ICharacter } from '../../models/characters/ICharacter';
-import { addCharacter } from '../../store/character/actions';
-import Modal from '../../components/modal/modal';
-import { TodoService } from '../../api/todos/todoService';
+import LayoutMain from '../../components/layout/main';
+import UserProfilePage from '../user/profile';
+import MetadataFilter from '../../components/metadata/metadataFilter';
+import { MetadataControlType } from '../../components/metadata/metadataControl';
+import { IMetadataInput } from '../../components/metadata/metadataInput';
+import { IMetadataSelect } from '../../components/metadata/metadataSelect';
+import MetadataDatePicker from '../../components/metadata/metadataDatePicker';
 
-interface IHomePageProps {
-    characters: ICharacter[];
+interface IRouteProps { }
+
+interface IProps extends RouteComponentProps<IRouteProps> {
+    currentUser: ICurrentUserDetails;
     dispatch: any;
 }
 
-interface IHomePageState {
+interface IState { 
+    userMenu: boolean;
     name: string;
+    select: number | undefined;
+    date: string;
 }
 
-class HomePage extends Component<IHomePageProps, IHomePageState> {
-    constructor(props: IHomePageProps){
+class HomePage extends Component<IProps, IState> {
+    constructor(props: IProps){
         super(props);
 
         this.state = {
-            name: ''
+            userMenu: false,
+            name: '',
+            select: undefined,
+            date: ''
         };
-
+        
         this.handleInputChange = this.handleInputChange.bind(this);
-        this.handleOnSubmit = this.handleOnSubmit.bind(this);
-    }
-    
-    componentDidMount(){
-        let service1 = new TodoService();
-        service1.getBooks();
-    }
-    
-    private handleInputChange(e: ChangeEvent<HTMLInputElement>) { //e is element
-        this.setState({ ...this.state, [e.target.name]: e.target.value })
+        this.handleSelectChange = this.handleSelectChange.bind(this);
+        this.onRemoveFilter = this.onRemoveFilter.bind(this);
+        this.onUserNavOpenClick = this.onUserNavOpenClick.bind(this);
+        this.onUserNavCloseClick = this.onUserNavCloseClick.bind(this);
     }
 
-    private handleOnSubmit() {
-        this.props.dispatch(addCharacter(this.state.name));
+    private handleInputChange(e: ChangeEvent<HTMLInputElement>) { //e is element
+        this.setState({ ...this.state, [e.target.name]: e.target.value });
+    }
+
+    private handleSelectChange(e: ChangeEvent<HTMLSelectElement>) { //e is element
+        this.setState({ ...this.state, [e.target.name]: e.target.value });
+    }
+
+    private onRemoveFilter(propName:string, callback?:() => void) { //e is element
+        this.setState({ ...this.state, [propName]: '' }, callback);
+    }
+
+    private onUserNavOpenClick() {        
+        this.setState({userMenu: true});
+    }
+
+    private onUserNavCloseClick() {
+        this.setState({userMenu: false});
     }
 
     render() {
 		return (
-			<div>
-                <input type="text" name="name" value={this.state.name} onChange={this.handleInputChange} />
-                <button onClick={this.handleOnSubmit}>Submit</button>
-
-                {/* <Modal> */}
-                    {this.props.characters.map((character: ICharacter, index: number) => {
-                        return <div key={index}>{character.name}</div>
-                    })}
-                {/* </Modal> */}
-			</div>
+			<LayoutMain currentPath={this.props.location.pathname} addAction={() => {}}>
+                <MetadataDatePicker id='username' label='Date' name='Date' value={this.state.date} />
+                <MetadataFilter 
+                    id="filter" 
+                    onRemoveFilter={this.onRemoveFilter}                    
+                    metadata={[
+                        {
+                            controlType: MetadataControlType.Input,
+                            control:  {
+                                    id: 'username',
+                                    label: 'Name',
+                                    value: this.state.name,
+                                    name: 'name',
+                                    onChange: this.handleInputChange                        
+                            } as IMetadataInput,                     
+                        },
+                        {
+                            controlType: MetadataControlType.Select,
+                            control: {
+                                id: 'select',
+                                label: 'Select',
+                                value: this.state.select,
+                                name: 'select',
+                                onChange: this.handleSelectChange,
+                                options: [
+                                    {key: 0, value:'none'},
+                                    {key: 1, value:'one'},
+                                    {key: 2, value:'two'},
+                                    {key: 3, value:'three'}
+                                ]                        
+                            } as IMetadataSelect,
+                        }
+                    ]}
+                />
+            </LayoutMain>
 		);
 	}
 }
 
 const mapStateToProps = (store: IAppState) => {
 	return {
-		characters: store.characterState.characters
+		currentUser: store.currentUserState.currentUser
 	};
 }
 

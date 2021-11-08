@@ -1,8 +1,8 @@
 
 import React, { ChangeEvent, Component } from "react";
+import { FloatingLabel, Form } from "react-bootstrap";
 import { IKeyValuePair } from "../../models/common/iKeyValuePair";
 import IMetadataControl from "./metadataControl";
-import MetadataInputContainer from "./metadataInputContainer";
 
 
 export interface IMetadataSelect extends IMetadataControl {   
@@ -29,10 +29,8 @@ class MetadataSelect extends Component<IMetadataSelect> {
 
     render() {
 		return (
-			<MetadataInputContainer>
-                <label>{this.props.label}</label>
-                <select 
-                    id={this.props.id}                    
+            <FloatingLabel label={this.props.label} controlId={this.props.id}>
+                <Form.Select                   
                     value={this.props.onChange ? this.props.value : undefined}
                     defaultValue={this.props.onChange ? undefined : this.props.value}
 
@@ -46,8 +44,8 @@ class MetadataSelect extends Component<IMetadataSelect> {
                     className="metadata-select"
                 >
                     {this.renderOptions()}
-                </select>            
-            </MetadataInputContainer>
+                </Form.Select> 
+            </FloatingLabel>
 		);
 	}
 }

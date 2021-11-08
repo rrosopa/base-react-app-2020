@@ -4,36 +4,31 @@ import { FloatingLabel, Form } from "react-bootstrap";
 import IMetadataControl from "./metadataControl";
 
 
-export interface IMetadataInput extends IMetadataControl {    
-    type?: string;
-    
+export interface IMetadataTextArea extends IMetadataControl { 
     onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
-class MetadataInput extends Component<IMetadataInput> {
+class MetadataTextArea extends Component<IMetadataTextArea> {
     render() {
 		return (
             <FloatingLabel label={this.props.label} controlId={this.props.id}>
                 <Form.Control
+                    as="textarea"
                     value={this.props.onChange ? this.props.value : undefined}
                     defaultValue={this.props.onChange ? undefined : this.props.value}
 
                     disabled={this.props.disabled}
                     name={this.props.name}
-                    required={this.props.required}
-                    type={this.props.type}    
+                    required={this.props.required}                    
 
                     onChange={this.props.onChange}
                     style={{display: this.props.hidden === true ? 'none' : 'inherit'}}
-                    placeholder={this.props.label}
-                    tabIndex={this.props.tabIndex}
 
                     className="metadata-input"
                 />
-                <Form.Control.Feedback type="invalid">{this.props.errorMessage}</Form.Control.Feedback>
             </FloatingLabel>
 		);
 	}
 }
 
-export default MetadataInput;
+export default MetadataTextArea;
