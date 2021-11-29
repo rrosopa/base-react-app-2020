@@ -178,7 +178,6 @@ class MetadataDatePicker extends Component<IMetadataDatePicker, IState> {
                 <FloatingLabel label={this.props.label} controlId={this.props.id} className="flex-grow-1">
                     <Form.Control
                         value={this.state.selectedDateText}
-                        defaultValue={this.props.onChange ? undefined : this.props.value}
 
                         disabled={this.props.disabled}
                         name={this.props.name}

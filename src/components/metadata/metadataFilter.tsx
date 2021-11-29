@@ -48,7 +48,7 @@ class MetadataFilter extends Component<IMetadataFilterProp, IMetadataFilterState
                 if(m.controlType === MetadataControlType.Input)
                     filters.push({key: m.control.name, value: `${m.control.label ?? m.control.name}: ${m.control.value}`});
                 else if(m.controlType === MetadataControlType.Select){
-                    var option = (m as unknown as IMetadataSelect).options.find(x => x.key == m.control.value)
+                    var option = (m.control as unknown as IMetadataSelect).options.find(x => x.key == m.control.value);
                     filters.push({key: m.control.name, value: `${m.control.label ?? m.control.name}: ${option?.value}`});
                 }
             }     
@@ -90,14 +90,19 @@ class MetadataFilter extends Component<IMetadataFilterProp, IMetadataFilterState
         );            
     }
 
+    renderFilterCountBadge(){
+        if(this.state.filters?.length > 0)
+            return <Badge bg="secondary">{this.state.filters.length}</Badge>
+    }
+
     render() {
 		return (
             <>
                 <Container>
                     <Row>
-                        <Col xs={3} md={2} xxl={1}>
+                        <Col xs={3} md={2}>
                             <Button type="button" onClick={this.handleShowOverlay}>
-                                <i className="bi bi-funnel"></i> Filter
+                                <i className="bi bi-funnel"></i> Filter { this.renderFilterCountBadge() }
                             </Button>
                         </Col>
                         <Col className="d-flex align-items-center">

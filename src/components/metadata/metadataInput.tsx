@@ -15,8 +15,7 @@ class MetadataInput extends Component<IMetadataInput> {
 		return (
             <FloatingLabel label={this.props.label} controlId={this.props.id}>
                 <Form.Control
-                    value={this.props.onChange ? this.props.value : undefined}
-                    defaultValue={this.props.onChange ? undefined : this.props.value}
+                    value={this.props.onChange ? this.props.value : undefined}                    
 
                     disabled={this.props.disabled}
                     name={this.props.name}
