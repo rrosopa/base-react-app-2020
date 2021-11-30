@@ -10,7 +10,7 @@ import MetadataFilter from '../../components/metadata/metadataFilter';
 import { MetadataControlType } from '../../components/metadata/metadataControl';
 import { IMetadataInput } from '../../components/metadata/metadataInput';
 import { IMetadataSelect } from '../../components/metadata/metadataSelect';
-import MetadataDatePicker from '../../components/metadata/metadataDatePicker';
+import MetadataDatePicker, { IMetadataDatePicker } from '../../components/metadata/metadataDatePicker';
 
 interface IRouteProps { }
 
@@ -67,7 +67,7 @@ class HomePage extends Component<IProps, IState> {
     render() {
 		return (
 			<LayoutMain currentPath={this.props.location.pathname} addAction={() => {}}>
-                <MetadataDatePicker id='username' label='Date' name='Date' value={this.state.date} />
+                {/* <MetadataDatePicker id='username' label='Date' name='Date' value={this.state.date} /> */}
                 <MetadataFilter 
                     id="filter" 
                     onRemoveFilter={this.onRemoveFilter}                    
@@ -97,7 +97,16 @@ class HomePage extends Component<IProps, IState> {
                                     {key: 3, value:'three'}
                                 ]                        
                             } as IMetadataSelect,
-                        }
+                        },
+                        {
+                            controlType: MetadataControlType.DatePicker,
+                            control:  {
+                                    id: 'date',
+                                    label: 'Date',
+                                    value: this.state.date,
+                                    name: 'Date'                     
+                            } as IMetadataDatePicker,                     
+                        },
                     ]}
                 />
             </LayoutMain>

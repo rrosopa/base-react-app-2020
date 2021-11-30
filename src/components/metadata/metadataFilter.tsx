@@ -45,7 +45,7 @@ class MetadataFilter extends Component<IMetadataFilterProp, IMetadataFilterState
         var filters:IKeyValuePair<string, string>[] = [];
         this.props.metadata.forEach(m => {
             if(m.control.value){
-                if(m.controlType === MetadataControlType.Input)
+                if(m.controlType === MetadataControlType.Input || m.controlType === MetadataControlType.DatePicker)
                     filters.push({key: m.control.name, value: `${m.control.label ?? m.control.name}: ${m.control.value}`});
                 else if(m.controlType === MetadataControlType.Select){
                     var option = (m.control as unknown as IMetadataSelect).options.find(x => x.key == m.control.value);

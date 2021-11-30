@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Button, Col, Form, Row } from "react-bootstrap";
 import { IMetadataFormControl, MetadataControlType } from "./metadataControl";
+import MetadataDatePicker, { IMetadataDatePicker } from "./metadataDatePicker";
 import MetadataInput, { IMetadataInput } from "./metadataInput";
 import MetadataSelect, { IMetadataSelect } from "./metadataSelect";
 import MetadataTextArea, { IMetadataTextArea } from "./metadataTextArea";
@@ -71,6 +72,9 @@ class MetadataForm extends Component<IMetadataForm, IState> {
             return <MetadataSelect {...(metadataFormControl.control as IMetadataSelect)} />
         else if(metadataFormControl.controlType === MetadataControlType.Textarea)
             return <MetadataTextArea {...(metadataFormControl.control as IMetadataTextArea)} />
+        else if(metadataFormControl.controlType === MetadataControlType.DatePicker)
+            return <MetadataDatePicker {...(metadataFormControl.control as IMetadataDatePicker)} />
+            
     }
 
     handleSubmit(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) { 

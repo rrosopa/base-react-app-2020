@@ -50,7 +50,7 @@ class MetadataDatePicker extends Component<IMetadataDatePicker, IState> {
         }
         
         this.state = {
-            show: true,
+            show: false,
             viewDate: viewDate,            
             viewYear: viewDate.getFullYear(),
             viewMonth: viewDate.getMonth() + 1,
