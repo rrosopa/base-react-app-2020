@@ -11,6 +11,7 @@ import { MetadataControlType } from '../../components/metadata/metadataControl';
 import { IMetadataInput } from '../../components/metadata/metadataInput';
 import { IMetadataSelect } from '../../components/metadata/metadataSelect';
 import MetadataDatePicker, { IMetadataDatePicker } from '../../components/metadata/metadataDatePicker';
+import { DateHelper } from '../../helpers/dateHelper';
 
 interface IRouteProps { }
 
@@ -39,6 +40,7 @@ class HomePage extends Component<IProps, IState> {
         
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleSelectChange = this.handleSelectChange.bind(this);
+        this.handleDateChange = this.handleDateChange.bind(this);
         this.onRemoveFilter = this.onRemoveFilter.bind(this);
         this.onUserNavOpenClick = this.onUserNavOpenClick.bind(this);
         this.onUserNavCloseClick = this.onUserNavCloseClick.bind(this);
@@ -50,6 +52,10 @@ class HomePage extends Component<IProps, IState> {
 
     private handleSelectChange(e: ChangeEvent<HTMLSelectElement>) { //e is element
         this.setState({ ...this.state, [e.target.name]: e.target.value });
+    }
+
+    private handleDateChange(date: Date) {
+        this.setState({ date: DateHelper.ToStringYearMonthDate(date) });
     }
 
     private onRemoveFilter(propName:string, callback?:() => void) { //e is element
@@ -79,7 +85,7 @@ class HomePage extends Component<IProps, IState> {
                                     label: 'Name',
                                     value: this.state.name,
                                     name: 'name',
-                                    onChange: this.handleInputChange                        
+                                    onChange: this.handleInputChange
                             } as IMetadataInput,                     
                         },
                         {
@@ -104,7 +110,8 @@ class HomePage extends Component<IProps, IState> {
                                     id: 'date',
                                     label: 'Date',
                                     value: this.state.date,
-                                    name: 'Date'                     
+                                    name: 'Date',
+                                    onChange: this.handleDateChange
                             } as IMetadataDatePicker,                     
                         },
                     ]}

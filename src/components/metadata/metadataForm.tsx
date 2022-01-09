@@ -111,8 +111,8 @@ class MetadataForm extends Component<IMetadataForm, IState> {
     renderBtnCancel(){
         if(this.props.onCancel){
             return  (
-                <Button variant="outline-danger" onClick={this.handleCancel}>
-                    {this.props.btnSubmitText ?? "Cancel"}
+                <Button variant="outline-danger me-3" onClick={this.handleCancel}>
+                    {this.props.btnCancelText ?? "Cancel"}
                 </Button>
             );            
         }

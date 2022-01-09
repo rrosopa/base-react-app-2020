@@ -33,6 +33,7 @@ class MetadataFilter extends Component<IMetadataFilterProp, IMetadataFilterState
         }
 
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleClearFilters = this.handleClearFilters.bind(this);
         this.handleCloseOverlay = this.handleCloseOverlay.bind(this);
         this.handleShowOverlay = this.handleShowOverlay.bind(this);
         this.handleBadgeClick = this.handleBadgeClick.bind(this);
@@ -58,6 +59,12 @@ class MetadataFilter extends Component<IMetadataFilterProp, IMetadataFilterState
             showOverlay: false,
             filters: filters
         });
+    }
+    
+    handleClearFilters() {       
+        if(this.props.onRemoveFilter){
+
+        }
     } 
 
     handleCloseOverlay(){
@@ -120,6 +127,8 @@ class MetadataFilter extends Component<IMetadataFilterProp, IMetadataFilterState
                             metadata={this.props.metadata}
                             btnSubmitText={this.props.btnSubmitText ?? 'Search'}
                             onSubmit={this.handleSubmit}
+                            // btnCancelText="Reset Search"
+                            // onCancel={this.handleClearFilters}                            
                         />
                     </Offcanvas.Body>
                 </Offcanvas>

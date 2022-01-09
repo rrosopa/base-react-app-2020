@@ -8,7 +8,7 @@ import IMetadataControl from "./metadataControl";
 
 export interface IMetadataDatePicker extends IMetadataControl {     
     date?: Date;
-    onChange?: (date: Date) => void;
+    onChange?: (dateSelected: Date | undefined) => void;
 }
 
 interface IState {
@@ -22,6 +22,8 @@ interface IState {
 
 class MetadataDatePicker extends Component<IMetadataDatePicker, IState> {
     _inputGroupRef = createRef<HTMLDivElement>();
+    _inputRef = createRef<HTMLInputElement>();
+
     _months = [
         { name: "January", shortenedName: "Jan", number: 1 },
         { name: "February", shortenedName: "Feb", number: 2 },
@@ -77,6 +79,8 @@ class MetadataDatePicker extends Component<IMetadataDatePicker, IState> {
                 viewYear: viewDate.getFullYear(),
                 viewMonth: viewDate.getMonth() + 1            
             });
+
+            this._inputRef.current?.focus();
         }
         else {
             this.setState({
@@ -123,7 +127,11 @@ class MetadataDatePicker extends Component<IMetadataDatePicker, IState> {
                 selectedDate: selectedDate,
                 show: false,
                 selectedDateText: DateHelper.ToStringYearMonthDate(selectedDate)
-            })
+            }, () => {
+                if(this.props.onChange){
+                    this.props.onChange(selectedDate);
+                }
+            });
         }
     }
 
@@ -190,6 +198,7 @@ class MetadataDatePicker extends Component<IMetadataDatePicker, IState> {
                         readOnly
                         onClick={this.handleCalendarClick}                        
                         className={"metadata-input calendar-input" + (this.state.show ? " calendar-focus" : "")}
+                        ref={this._inputRef}
                     />
                 </FloatingLabel>                            
                 <i className="bi bi-calendar3 calendar-button" onClick={this.handleCalendarClick}></i>                
