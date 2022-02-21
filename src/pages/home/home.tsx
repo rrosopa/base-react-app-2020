@@ -63,7 +63,7 @@ class HomePage extends Component<IProps, IState> {
     }
 
     private onUserNavOpenClick() {        
-        this.setState({userMenu: true});
+        this.setState({userMenu: true});        
     }
 
     private onUserNavCloseClick() {

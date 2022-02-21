@@ -1,8 +1,9 @@
 export enum MetadataControlType {
+    Checkbox,    
+    DatePicker,
     Input,
     Select,
     Textarea,
-    DatePicker
 }
 
 export interface IMetadataControlWidth {

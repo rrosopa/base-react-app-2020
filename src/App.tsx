@@ -14,11 +14,14 @@ import {
 import SecuredRoute from './components/securedRoute';
 import './styles/index.scss';
 import { PagePath } from './constants/pagePath';
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify';
 
 class App extends Component {
 	render() {
 		return (
 			<div className="App">
+				<ToastContainer/>
 				<Router>
 					<Switch>
 						<Route exact path="/login" component={LoginPage} />

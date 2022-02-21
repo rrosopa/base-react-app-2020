@@ -1,9 +1,8 @@
-import React, { ChangeEvent, Component } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router-dom';
 import LayoutMain from '../../components/layout/main';
 import { PageNavLink } from '../../constants/pageNavLinks';
-import { PagePath } from '../../constants/pagePath';
 import { IAppState } from '../../store/store';
 
 interface IRouteProps { }

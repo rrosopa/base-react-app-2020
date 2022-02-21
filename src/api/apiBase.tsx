@@ -1,45 +1,37 @@
+import axios from "axios";
 import { appConstants } from "../constants/appConstants";
 
-export enum APIMethods {
-    GET = 'GET',
-    POST = 'POST',
-    PUT = 'PUT'
+export const appApi = axios.create({
+    headers : {
+     'Accept': 'application/json',
+     'Authorization': `Bearer ${localStorage.getItem(appConstants.token)}`,
+     'Content-Type': 'application/json',
+     'Access-Control-Allow-Origin': '*'
+    }
+});
+
+async function refreshAccessToken(){
+    return appApi.post(
+        `${appConstants.apiUrl}/auth/refresh`, 
+        { refreshToken: localStorage.getItem(appConstants.refreshToken)}
+    );
 }
 
-function appFetch<T>(url: string, method: APIMethods, data?: Object): Promise<T> {
-    return fetch(url, {
-        method: method,
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${localStorage.getItem(appConstants.token)}`
-        },
-        body: data == null ? undefined : JSON.stringify(data)
-    })
-    .then(response => {
-        if(response.status === 401){
-            // redirect to login page?
-        }
-        else if(response.status === 403){
-            // redirect to forbidden/warning page?
-        }
-
-        return response.json();
-    })
-    .catch(error => {
-        console.log('An error occured. ', error);
-        throw error;
-    })
-}
-
-
-export const api = {
-    get: function<T>(url: string): Promise<T> {
-        return appFetch<T>(url, APIMethods.GET);
+appApi.interceptors.response.use(
+    (response) => {
+        return response;
     },
-    post: function<T>(url: string, data: object): Promise<T> {
-        return appFetch<T>(url, APIMethods.POST, data);
-    },
-    put: function<T>(url: string, data: object): Promise<T> {
-        return appFetch<T>(url, APIMethods.PUT, data);
-    } 
-}
+    async function (error) {
+        const originalRequest = error.config;
+
+        if(error.response.status === 403 && !originalRequest._retry){
+            originalRequest._retry = true;            
+            const refreshResponse = await refreshAccessToken();
+            // localStorage.setItem(appConstants.token, refreshResponse.data.token);
+            return appApi(originalRequest);
+        }
+        else if(error.response === 401){
+            // redirect ot login?
+        }
+    }
+)

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Button, Col, Form, Row } from "react-bootstrap";
+import MetadataCheckbox, { IMetadataCheckbox } from "./metadataCheckbox";
 import { IMetadataFormControl, MetadataControlType } from "./metadataControl";
 import MetadataDatePicker, { IMetadataDatePicker } from "./metadataDatePicker";
 import MetadataInput, { IMetadataInput } from "./metadataInput";
@@ -74,6 +75,8 @@ class MetadataForm extends Component<IMetadataForm, IState> {
             return <MetadataTextArea {...(metadataFormControl.control as IMetadataTextArea)} />
         else if(metadataFormControl.controlType === MetadataControlType.DatePicker)
             return <MetadataDatePicker {...(metadataFormControl.control as IMetadataDatePicker)} />
+        else if(metadataFormControl.controlType === MetadataControlType.Checkbox)
+            return <MetadataCheckbox {...(metadataFormControl.control as IMetadataCheckbox)} />
             
     }
 

@@ -1,12 +1,10 @@
-import { api } from "../apiBase";
+import { AxiosResponse } from "axios";
+import { appApi } from "../apiBase";
 
 export class TodoService {
-    public getBooks(){
+    public async getBooks() : Promise<AxiosResponse<Todo[]>>{
         console.log('getting books...');
-        api.get<Todo[]>('https://jsonplaceholder.typicode.com/todos')
-            .then(result => {
-                console.log(result);
-            })
+        return appApi.get<Todo[]>('https://jsonplaceholder.typicode.com/todos');
     }
 }
 

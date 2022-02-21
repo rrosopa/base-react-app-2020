@@ -26,7 +26,7 @@ class LoginPage extends Component<IProps, IState> {
 
         this.state = {
             username: '',
-            password: ''
+            password: '',
         };
 
         this.handleInputChange = this.handleInputChange.bind(this);
