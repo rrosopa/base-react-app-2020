@@ -6,6 +6,7 @@ import { MetadataControlType } from '../../components/metadata/metadataControl';
 import MetadataForm from '../../components/metadata/metadataForm';
 import { IMetadataInput } from '../../components/metadata/metadataInput';
 import { ICharacter } from '../../models/characters/ICharacter';
+import { setPageLoader } from '../../store/appComponent/actions';
 import { IAppState } from '../../store/store';
 
 interface IRouteProps { }
@@ -40,7 +41,7 @@ class LoginPage extends Component<IProps, IState> {
     }
 
     private onLogin(){
-        alert('login');
+        this.props.dispatch(setPageLoader(true, 'verifying credentials...'));
     }
 
     render() {

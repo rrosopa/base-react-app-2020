@@ -1,27 +1,51 @@
 import React, { Component } from 'react';
-import HomePage from './pages/home/home';
-import LoginPage from './pages/login/login';
-import NotFoundPage from './pages/errors/notFound';
-import ForbiddenPage from './pages/errors/forbidden';
-import UserProfilePage from './pages/user/profile';
-import UserSecurityPage from './pages/user/security';
+import { Bars } from 'react-loader-spinner';
+import { connect } from 'react-redux';
 import {
-	BrowserRouter as Router, 
-	Route,
-	Redirect,
+	BrowserRouter as Router,
+	Redirect, Route,
 	Switch
 } from 'react-router-dom';
-import SecuredRoute from './components/securedRoute';
-import './styles/index.scss';
-import { PagePath } from './constants/pagePath';
-import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import Overlay from './components/overlay/overlay';
+import { PagePath } from './constants/pagePath';
+import ForbiddenPage from './pages/errors/forbidden';
+import NotFoundPage from './pages/errors/notFound';
+import HomePage from './pages/home/home';
+import LoginPage from './pages/login/login';
+import UserProfilePage from './pages/user/profile';
+import UserSecurityPage from './pages/user/security';
+import { IPageLoader } from './store/appComponent/actions';
+import { IAppState } from './store/store';
+import './styles/index.scss';
 
-class App extends Component {
-	render() {
+interface IProps  {
+    pageLoader: IPageLoader;
+    dispatch: any;
+}
+
+interface IState {
+}
+
+class App extends Component<IProps, IState> {
+	
+	renderPageLoader(){
+		if(this.props.pageLoader?.isVisible){
+			return (
+				<Overlay>
+					<Bars color="#00BFFF" height={80} width={80} />
+					<p className="p-3">{ this.props.pageLoader.message }</p>
+				</Overlay>
+			);
+		}
+	}
+
+    render() {
 		return (
 			<div className="App">
 				<ToastContainer/>
+				{ this.renderPageLoader() }
 				<Router>
 					<Switch>
 						<Route exact path="/login" component={LoginPage} />
@@ -39,4 +63,14 @@ class App extends Component {
 	}
 }
 
-export default App;
+const mapStateToProps = (store: IAppState) => {
+	return {
+		pageLoader: store.componentState.pageLoader
+	};
+}
+
+const mapDispatchToProps = (dispatch: any) => {
+    return { dispatch };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

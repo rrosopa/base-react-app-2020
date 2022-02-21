@@ -1,4 +1,5 @@
 import { combineReducers, createStore, Store } from 'redux';
+import { componentReducer, IComponentState } from './appComponent/reducer';
 
 // Import reducers and state type
 import { characterReducer, ICharacterState } from './character/reducer';
@@ -11,12 +12,14 @@ import { ICurrentUserState, currentUserReducer } from './currentUser/reducer';
 export interface IAppState {
   characterState: ICharacterState;
   currentUserState: ICurrentUserState;
+  componentState: IComponentState;
 }
 
 // Create the root reducer
 const rootReducer = combineReducers<IAppState>({
   characterState: characterReducer,
-  currentUserState: currentUserReducer
+  currentUserState: currentUserReducer,
+  componentState: componentReducer
 });
 
 // Create a configure store function of type `IAppState`
