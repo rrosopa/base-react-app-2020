@@ -3,6 +3,7 @@ export enum MetadataControlType {
     DatePicker,
     Input,
     Select,
+    Switch,
     Textarea,
 }
 

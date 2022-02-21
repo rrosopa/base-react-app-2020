@@ -6,6 +6,7 @@ import MetadataDatePicker, { IMetadataDatePicker } from "./metadataDatePicker";
 import MetadataInput, { IMetadataInput } from "./metadataInput";
 import MetadataSelect, { IMetadataSelect } from "./metadataSelect";
 import MetadataTextArea, { IMetadataTextArea } from "./metadataTextArea";
+import MetadataSwtich, { IMetadataSwitch } from "./metadataSwitch";
 
 
 export interface IMetadataForm {
@@ -77,6 +78,8 @@ class MetadataForm extends Component<IMetadataForm, IState> {
             return <MetadataDatePicker {...(metadataFormControl.control as IMetadataDatePicker)} />
         else if(metadataFormControl.controlType === MetadataControlType.Checkbox)
             return <MetadataCheckbox {...(metadataFormControl.control as IMetadataCheckbox)} />
+            else if(metadataFormControl.controlType === MetadataControlType.Switch)
+                return <MetadataSwtich {...(metadataFormControl.control as IMetadataSwitch)} />
             
     }
 
