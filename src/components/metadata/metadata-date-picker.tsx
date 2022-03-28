@@ -2,8 +2,8 @@
 import React, { ChangeEvent, Component, createRef } from "react";
 import { Button, Col, Container, FloatingLabel, Form, InputGroup, Overlay, OverlayTrigger, Popover, Row } from "react-bootstrap";
 import { StringLiteralLike } from "typescript";
-import { DateHelper } from "../../helpers/dateHelper";
-import IMetadataControl from "./metadataControl";
+import { DateHelper } from "../../helpers/date-helper";
+import IMetadataControl from "./metadata-control";
 
 
 export interface IMetadataDatePicker extends IMetadataControl {     
@@ -20,7 +20,7 @@ interface IState {
     selectedDateText?: string;
 }
 
-class MetadataDatePicker extends Component<IMetadataDatePicker, IState> {
+export class MetadataDatePicker extends Component<IMetadataDatePicker, IState> {
     _inputGroupRef = createRef<HTMLDivElement>();
     _inputRef = createRef<HTMLInputElement>();
 
@@ -254,5 +254,3 @@ class MetadataDatePicker extends Component<IMetadataDatePicker, IState> {
 		);
 	}
 }
-
-export default MetadataDatePicker;

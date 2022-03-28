@@ -1,29 +1,16 @@
-import { combineReducers, createStore, Store } from 'redux';
-import { componentReducer, IComponentState } from './appComponent/reducer';
+import { configureStore } from '@reduxjs/toolkit';
+import { useDispatch } from 'react-redux';
+import { AppComponentSlice } from './reducers/app-components-reducer';
+import { CurrentUserSlice } from './reducers/current-user-reducer';
 
-// Import reducers and state type
-import { characterReducer, ICharacterState } from './character/reducer';
-import { ICurrentUserState, currentUserReducer } from './currentUser/reducer';
-
-// Always ask yourself the following:
-// 1. Do other parts of the application care about this data?
-// 2. Is this data being used to drive multiple components?
-// 3. Do you want to cache the data? does the data really required to be cache?
-export interface IAppState {
-  characterState: ICharacterState;
-  currentUserState: ICurrentUserState;
-  componentState: IComponentState;
-}
-
-// Create the root reducer
-const rootReducer = combineReducers<IAppState>({
-  characterState: characterReducer,
-  currentUserState: currentUserReducer,
-  componentState: componentReducer
+const store = configureStore({
+  reducer: {
+    appComponent: AppComponentSlice.reducer,
+    currentUser: CurrentUserSlice.reducer
+  }
 });
 
-// Create a configure store function of type `IAppState`
-export default function configureStore(): Store<IAppState, any> {
-  const store = createStore(rootReducer);
-  return store;
-}
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;
+export const useAppDispatch = () => useDispatch<AppDispatch>();
+export default store;

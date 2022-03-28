@@ -1,10 +1,10 @@
 
 import React, { Component } from "react";
 import { Badge, Button, Col, Container, Offcanvas, Row } from "react-bootstrap";
-import { IKeyValuePair } from "../../models/common/iKeyValuePair";
-import { IMetadataFormControl, MetadataControlType } from "./metadataControl";
-import MetadataForm from "./metadataForm";
-import { IMetadataSelect } from "./metadataSelect";
+import { IKeyValuePair } from "../../models/common/key-value-pair";
+import { IMetadataFormControl, MetadataControlType } from "./metadata-control";
+import { MetadataForm } from "./metadata-form";
+import { IMetadataSelect } from "./metadata-select";
 
 
 export interface IMetadataFilterProp {
@@ -23,7 +23,7 @@ export interface IMetadataFilterState{
     filters: IKeyValuePair<string, string>[];
 }
 
-class MetadataFilter extends Component<IMetadataFilterProp, IMetadataFilterState> {
+export class MetadataFilter extends Component<IMetadataFilterProp, IMetadataFilterState> {
     constructor(props: IMetadataFilterProp){
         super(props);
 
@@ -104,19 +104,17 @@ class MetadataFilter extends Component<IMetadataFilterProp, IMetadataFilterState
 
     render() {
 		return (
-            <>
-                <Container>
-                    <Row>
-                        <Col xs={3} md={2}>
-                            <Button type="button" onClick={this.handleShowOverlay}>
-                                <i className="bi bi-funnel"></i> Filter { this.renderFilterCountBadge() }
-                            </Button>
-                        </Col>
-                        <Col className="d-flex align-items-center">
-                            {this.renderFilterBadges()}
-                        </Col>
-                    </Row>
-                </Container>
+            <>                
+                <Row>
+                    <Col xs={3} md={2}>
+                        <Button type="button" onClick={this.handleShowOverlay}>
+                            <i className="bi bi-funnel"></i> Filter { this.renderFilterCountBadge() }
+                        </Button>
+                    </Col>
+                    <Col className="d-flex align-items-center">
+                        {this.renderFilterBadges()}
+                    </Col>
+                </Row>
                 <Offcanvas show={this.state.showOverlay} onHide={this.handleCloseOverlay}>
                     <Offcanvas.Header closeButton>
                         <Offcanvas.Title>{this.props.header ?? 'Filter'}</Offcanvas.Title>
@@ -136,5 +134,3 @@ class MetadataFilter extends Component<IMetadataFilterProp, IMetadataFilterState
 		);
 	}
 }
-
-export default MetadataFilter;

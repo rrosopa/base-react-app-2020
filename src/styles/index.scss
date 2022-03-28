@@ -1,31 +1,12 @@
 @import "../../node_modules/bootstrap/scss/bootstrap.scss";
 @import "../../node_modules/bootstrap-icons/font/bootstrap-icons.scss";
 @import "./variables.scss";
-@import "./mainNav.scss";
-@import "./pageNav.scss";
-@import "./metadataControls.scss";
+@import "./layout.scss";
+@import "./metadata-controls.scss";
 
 html,
 body,
 #root,
-.App {
-  height: 100%
-}
-
-.App {
-  display: flex;
-  flex-direction: column;
-}
-
-.page-container {
-  flex-grow: 1;
-  display: flex;
-
-  .row {
-    flex-grow: 1;
-  }
-}
-
 body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans",
     "Droid Sans", "Helvetica Neue", sans-serif;
@@ -34,6 +15,13 @@ body {
 
   --primary-color: blue;
   --primary-text-color: white;
+}
+
+html,
+body,
+#root,
+.app {
+  height: 100%;
 }
 
 code {
@@ -50,4 +38,8 @@ code {
 
 input:user-invalid {
   border-color: var(--bs-danger);
+}
+
+.mw-100 {
+  max-width: 100%!important;
 }

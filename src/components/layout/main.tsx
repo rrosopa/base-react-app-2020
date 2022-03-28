@@ -1,115 +1,66 @@
-import React, { Component } from 'react';
+import React, { PropsWithChildren, ReactNode, useEffect, useState } from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
-import { StringHelper } from '../../helpers/stringHelper';
-import LayoutAppNav from './mainNav';
-import PageNav, { ILayoutPageNavLink } from './pageNav';
+import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import { StringHelper } from '../../helpers/string-helper';
+import { AppComponentSlice } from '../../store/reducers/app-components-reducer';
+import { RootState, useAppDispatch } from '../../store/store';
+import { NavigationSide } from './navigation-side';
+import { NavigationTop } from './navigation-top';
 
-interface IProps {
-    currentPath: string;
+type Props = PropsWithChildren<{
     title?: string;
     formatTitle?: boolean;
-    pageNavLinks?: ILayoutPageNavLink[];
 
-    addAction?: () => void;    
-}
+    addAction?: () => void;
+}>
 
-interface IState {
-    userMenu: boolean;
-}
+export const LayoutMain = (props: Props): JSX.Element => {
+    const _history = useHistory();
+    const _dispatch = useAppDispatch();
+    const _appComponent = useSelector((state: RootState) => state.appComponent);
+    const [pageTitle, setPageTitle] = useState('');    
+    
+    useEffect(()=> {
+        var pathArr = _history.location.pathname.split('/');
+        var title = props.title ?? 'App Name';        
+        if(pathArr){
+            if(props.title){
 
-class LayoutMain extends Component<IProps, IState> {
-    constructor(props: IProps){
-        super(props);
-
-        this.state = {
-            userMenu: false
-        };
-
-        this.onUserNavOpenClick = this.onUserNavOpenClick.bind(this);
-        this.onUserNavCloseClick = this.onUserNavCloseClick.bind(this);
-    }
-
-    private onUserNavOpenClick() {        
-        this.setState({userMenu: true});
-    }
-
-    private onUserNavCloseClick() {
-        this.setState({userMenu: false});
-    }    
-
-    renderPageNav() {
-        if(this.props.pageNavLinks){
-            return (
-                <Col md={3} lg={2} className="page-nav-container bg-dark opacity-75 pt-lg-3 pe-lg-0">
-                    <PageNav
-                        currentPath={this.props.currentPath}
-                        links={this.props.pageNavLinks}
-                    />
-                </Col>
-            );
+            }
+            else{
+                title = pathArr[pathArr.length - 1];
+            }
         }
+
+        title = StringHelper.capitalize(title);
+        setPageTitle(title);
+        document.title = title;
+    });
+
+    function handleNavToggle(){
+        _dispatch(AppComponentSlice.actions.toggleSideNavigation());
     }
 
-    renderTitle(){
-        const pathArr = this.props.currentPath.split('/');
-        var title = this.props.title ?? pathArr[pathArr.length - 1];
-
-        if(title){
-            if(this.props.formatTitle !== false)
-                title = StringHelper.capitalize(title);
-
-            document.title = `AppName | ${title}`;
-
-            return (
-                <Container className="mt-5 shadow" fluid>
-                    <Container className="mt-3 pt-1">
-                        <Row className="h-100">
-                            <Col>
-                                <h3 className="d-md-none mb-0">{title}</h3>
-                                <h2 className="d-none d-md-block mb-0">{title}</h2>
-                            </Col>
-                            <Col className="d-flex justify-content-end align-items-center">
-                                { this.renderAddAction() }
-                                { this.renderAddAction() }
-                                { this.renderAddAction() }
-                                { this.renderAddAction() }
-                                { this.renderAddAction() } 
-                            </Col>
-                        </Row>
-                    </Container> 
-                </Container>
-            )
-        }
-    }
-
-    renderAddAction(){
-        if(this.props.addAction){
-            return (
-                <div className="title-bar-action">
-                    <i className="bi bi-plus"></i><span> New</span>
+    return (        
+        <div className="page">
+            <NavigationTop></NavigationTop>
+            <div className="layout">                    
+                <div className={"navigation-side-container " + (_appComponent.isSideNavigationExpanded ? "expand" : "")}>
+                    <NavigationSide />
+                    <div className="navigation-side-toggle" onClick={handleNavToggle}>
+                        <i className={_appComponent.isSideNavigationExpanded ? "fa-solid fa-angle-left" : "fa-solid fa-angle-right"}></i>
+                    </div>
                 </div>
-            )
-        }
-    }
-
-    render() {
-        
-
-		return (
-			<>
-                <LayoutAppNav></LayoutAppNav>
-                { this.renderTitle() }
-                <Container className="page-container">                    
-                    <Row>
-                        { this.renderPageNav() }
-                        <Col className="pt-3">
-                            { this.props.children }
-                        </Col>
-                    </Row>
-                </Container>          
-			</>
-		);
-	}
+                <div className="content-container">
+                    <div className="title">
+                        { pageTitle ?? '/ Home / Test / Another Page' }
+                    </div>
+                    <div className="content">
+                        { props.children }
+                    </div>
+                </div>
+            </div> 
+        </div>
+    );
 }
-
-export default LayoutMain;

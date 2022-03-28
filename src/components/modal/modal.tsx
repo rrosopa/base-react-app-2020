@@ -1,23 +1,14 @@
-import React, { Component } from 'react';
+import React, { PropsWithChildren } from 'react';
 import styles from './modal.scss';
 
-interface IModalProps {
+type Props = PropsWithChildren<{}>;
+
+export const Modal = (props: Props): JSX.Element => {
+    return (
+        <div className={styles.overlay}>
+            <div className={styles.alert}> 
+                { props.children }
+            </div>
+        </div>
+    );
 }
-
-class Modal extends Component<IModalProps> {
-    constructor(props: IModalProps){
-        super(props);
-    }
-
-    render() {
-		return (
-			<div className={styles.overlay}>
-                <div className={styles.alert}> 
-                    {this.props.children}
-                </div>
-			</div>
-		);
-	}
-}
-
-export default (Modal);
